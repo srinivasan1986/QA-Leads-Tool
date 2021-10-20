@@ -1,0 +1,7427 @@
+{
+  "namespace": "sap.sdcpmtool.datamodel",
+  "definitions": {
+    "sap.sdcpmtool.transaction.Projects": {
+      "kind": "entity",
+      "@Capabilities.SearchRestrictions.Searchable": false,
+      "includes": [
+        "cuid",
+        "managed"
+      ],
+      "elements": {
+        "ID": {
+          "@Core.Computed": true,
+          "@odata.Type": "Edm.String",
+          "key": true,
+          "type": "cds.UUID"
+        },
+        "createdAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedAt}",
+          "@readonly": true,
+          "@odata.on.insert": {
+            "#": "now"
+          },
+          "type": "cds.Timestamp"
+        },
+        "createdBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedBy}",
+          "@readonly": true,
+          "@odata.on.insert": {
+            "#": "user"
+          },
+          "@description": "{i18n>UserID.Description}",
+          "type": "User",
+          "length": 255
+        },
+        "modifiedAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@cds.on.update": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedAt}",
+          "@readonly": true,
+          "@odata.on.update": {
+            "#": "now"
+          },
+          "type": "cds.Timestamp"
+        },
+        "modifiedBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@cds.on.update": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedBy}",
+          "@readonly": true,
+          "@odata.on.update": {
+            "#": "user"
+          },
+          "@description": "{i18n>UserID.Description}",
+          "type": "User",
+          "length": 255
+        },
+        "projectId": {
+          "type": "cds.Integer"
+        },
+        "ptdProjectId": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "crmOppId": {
+          "type": "cds.String",
+          "length": 9
+        },
+        "customerName": {
+          "type": "cds.String",
+          "length": 30
+        },
+        "projectName": {
+          "@Common.FieldControl": {
+            "#": "Mandatory"
+          },
+          "type": "cds.String",
+          "length": 30
+        },
+        "projectType": {
+          "@Common.Text": {
+            "=": "projectType.name"
+          },
+          "@Common.TextFor": {
+            "=": "projectType.code"
+          },
+          "@Common.TextArrangement": {
+            "#": "TextOnly"
+          },
+          "@Common.ValueListWithFixedValues": true,
+          "@Common.ValueList.Label": "Project Types",
+          "@Common.ValueList.CollectionPath": "ProjectTypes",
+          "@Common.ValueList.Parameters": [
+            {
+              "$Type": "Common.ValueListParameterInOut",
+              "ValueListProperty": "code",
+              "LocalDataProperty": {
+                "=": "projectType_code"
+              }
+            },
+            {
+              "$Type": "Common.ValueListParameterDisplayOnly",
+              "ValueListProperty": "name"
+            }
+          ],
+          "type": "ProjectType",
+          "target": "sap.sdcpmtool.master.ProjectTypes",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "projectMode": {
+          "@Common.Text": {
+            "=": "projectMode.name"
+          },
+          "@Common.TextArrangement": {
+            "#": "TextOnly"
+          },
+          "@Common.ValueListWithFixedValues": true,
+          "@Common.ValueList.Label": "Project Modes",
+          "@Common.ValueList.CollectionPath": "ProjectModes",
+          "@Common.ValueList.Parameters": [
+            {
+              "$Type": "Common.ValueListParameterInOut",
+              "ValueListProperty": "code",
+              "LocalDataProperty": {
+                "=": "projectMode_code"
+              }
+            },
+            {
+              "$Type": "Common.ValueListParameterDisplayOnly",
+              "ValueListProperty": "name"
+            }
+          ],
+          "type": "ProjectMode",
+          "target": "sap.sdcpmtool.master.ProjectModes",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "projectStatus": {
+          "@Common.Text": {
+            "=": "projectStatus.name"
+          },
+          "@Common.TextArrangement": {
+            "#": "TextOnly"
+          },
+          "@Common.ValueListWithFixedValues": true,
+          "@Common.ValueList.Label": "Project Status",
+          "@Common.ValueList.CollectionPath": "ProjectStatuss",
+          "@Common.ValueList.Parameters": [
+            {
+              "$Type": "Common.ValueListParameterInOut",
+              "ValueListProperty": "code",
+              "LocalDataProperty": {
+                "=": "projectStatus_code"
+              }
+            },
+            {
+              "$Type": "Common.ValueListParameterDisplayOnly",
+              "ValueListProperty": "name"
+            }
+          ],
+          "type": "ProjectStatus",
+          "target": "sap.sdcpmtool.master.ProjectStatuss",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "actualStartDate": {
+          "@Common.FieldControl": {
+            "#": "Mandatory"
+          },
+          "type": "cds.Date"
+        },
+        "plannedStartDate": {
+          "type": "cds.Date"
+        },
+        "plannedEndDate": {
+          "type": "cds.Date"
+        },
+        "region": {
+          "@Common.ValueList.Label": "Regions",
+          "@Common.ValueList.CollectionPath": "Regions",
+          "@Common.ValueList.Parameters": [
+            {
+              "$Type": "Common.ValueListParameterInOut",
+              "ValueListProperty": "code",
+              "LocalDataProperty": {
+                "=": "region_code"
+              }
+            },
+            {
+              "$Type": "Common.ValueListParameterDisplayOnly",
+              "ValueListProperty": "name"
+            }
+          ],
+          "type": "Region",
+          "target": "sap.sdcpmtool.master.Regions",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "subRegion": {
+          "@Common.Text": {
+            "=": "subRegion.name"
+          },
+          "@Common.TextArrangement": {
+            "#": "TextOnly"
+          },
+          "@Common.ValueList.Label": "Sub Region",
+          "@Common.ValueList.CollectionPath": "SubRegions",
+          "@Common.ValueList.Parameters": [
+            {
+              "$Type": "Common.ValueListParameterInOut",
+              "ValueListProperty": "region_code",
+              "LocalDataProperty": {
+                "=": "region_code"
+              }
+            },
+            {
+              "$Type": "Common.ValueListParameterInOut",
+              "ValueListProperty": "code",
+              "LocalDataProperty": {
+                "=": "subRegion_code"
+              }
+            },
+            {
+              "$Type": "Common.ValueListParameterDisplayOnly",
+              "ValueListProperty": "name"
+            }
+          ],
+          "type": "SubRegion",
+          "target": "sap.sdcpmtool.master.SubRegions",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "country": {
+          "@title": "{i18n>Country}",
+          "@description": "{i18n>CountryCode.Description}",
+          "type": "Country",
+          "target": "sap.common.Countries",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "primaryDeliveryCenter": {
+          "@Common.Text": {
+            "=": "primaryDeliveryCenter.name"
+          },
+          "@Common.TextArrangement": {
+            "#": "TextOnly"
+          },
+          "@Common.ValueList.Label": "Delivery Center",
+          "@Common.ValueList.CollectionPath": "DeliveryCenters",
+          "@Common.ValueList.Parameters": [
+            {
+              "$Type": "Common.ValueListParameterInOut",
+              "ValueListProperty": "code",
+              "LocalDataProperty": {
+                "=": "primaryDeliveryCenter_code"
+              }
+            },
+            {
+              "$Type": "Common.ValueListParameterDisplayOnly",
+              "ValueListProperty": "name"
+            }
+          ],
+          "type": "DeliveryCenter",
+          "target": "sap.sdcpmtool.master.DeliveryCenters",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "bcpStatus": {
+          "@Common.Text": {
+            "=": "bcpStatus.name"
+          },
+          "@Common.TextArrangement": {
+            "#": "TextOnly"
+          },
+          "@Common.ValueListWithFixedValues": true,
+          "@Common.ValueList.Label": "BCP Status",
+          "@Common.ValueList.CollectionPath": "BCPStatusFields",
+          "@Common.ValueList.Parameters": [
+            {
+              "$Type": "Common.ValueListParameterInOut",
+              "ValueListProperty": "code",
+              "LocalDataProperty": {
+                "=": "bcpStatus_code"
+              }
+            },
+            {
+              "$Type": "Common.ValueListParameterDisplayOnly",
+              "ValueListProperty": "name"
+            }
+          ],
+          "type": "BCPStatusField",
+          "target": "sap.sdcpmtool.master.BCPStatusFields",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "qaLeadId": {
+          "@Common.Text": {
+            "=": "qaLeadId.userName"
+          },
+          "@Common.TextArrangement": {
+            "#": "TextFirst"
+          },
+          "@Common.ValueList.Label": "Users",
+          "@Common.ValueList.CollectionPath": "Users",
+          "@Common.ValueList.Parameters": [
+            {
+              "$Type": "Common.ValueListParameterInOut",
+              "ValueListProperty": "userId",
+              "LocalDataProperty": {
+                "=": "qaLeadId_userId"
+              }
+            },
+            {
+              "$Type": "Common.ValueListParameterDisplayOnly",
+              "ValueListProperty": "userName"
+            },
+            {
+              "$Type": "Common.ValueListParameterDisplayOnly",
+              "ValueListProperty": "userINo"
+            }
+          ],
+          "type": "PMToolUser",
+          "target": "sap.sdcpmtool.master.Users",
+          "keys": [
+            {
+              "ref": [
+                "id"
+              ]
+            }
+          ]
+        },
+        "factoryRelevant": {
+          "@Common.Text": {
+            "=": "factoryRelevant.name"
+          },
+          "@Common.TextArrangement": {
+            "#": "TextOnly"
+          },
+          "@Common.ValueList.Label": "Factory Relevant",
+          "@Common.ValueList.CollectionPath": "FactoryRelevantFields",
+          "@Common.ValueList.Parameters": [
+            {
+              "$Type": "Common.ValueListParameterInOut",
+              "ValueListProperty": "code",
+              "LocalDataProperty": {
+                "=": "factoryRelevant_code"
+              }
+            },
+            {
+              "$Type": "Common.ValueListParameterDisplayOnly",
+              "ValueListProperty": "name"
+            }
+          ],
+          "type": "FactoryRelevantField",
+          "target": "sap.sdcpmtool.master.FactoryRelevantFields",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "projectSize": {
+          "type": "ProjectSize",
+          "target": "sap.sdcpmtool.master.ProjectSizes",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "customerIndustry": {
+          "@Common.Text": {
+            "=": "customerIndustry.name"
+          },
+          "@Common.TextArrangement": {
+            "#": "TextOnly"
+          },
+          "@Common.ValueList.Label": "Customer Industry",
+          "@Common.ValueList.CollectionPath": "CustomerIndustries",
+          "@Common.ValueList.Parameters": [
+            {
+              "$Type": "Common.ValueListParameterInOut",
+              "ValueListProperty": "code",
+              "LocalDataProperty": {
+                "=": "customerIndustry_code"
+              }
+            },
+            {
+              "$Type": "Common.ValueListParameterDisplayOnly",
+              "ValueListProperty": "name"
+            }
+          ],
+          "type": "CustomerIndustry",
+          "target": "sap.sdcpmtool.master.CustomerIndustries",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "projectManager": {
+          "@Common.Text": {
+            "=": "projectManager.userName"
+          },
+          "@Common.TextArrangement": {
+            "#": "TextFirst"
+          },
+          "@Common.FieldControl": {
+            "#": "Mandatory"
+          },
+          "@Common.ValueList.Label": "Users",
+          "@Common.ValueList.CollectionPath": "Users",
+          "@Common.ValueList.Parameters": [
+            {
+              "$Type": "Common.ValueListParameterInOut",
+              "ValueListProperty": "userId",
+              "LocalDataProperty": {
+                "=": "projectManager_userId"
+              }
+            },
+            {
+              "$Type": "Common.ValueListParameterDisplayOnly",
+              "ValueListProperty": "userName"
+            },
+            {
+              "$Type": "Common.ValueListParameterDisplayOnly",
+              "ValueListProperty": "userINo"
+            }
+          ],
+          "type": "PMToolUser",
+          "target": "sap.sdcpmtool.master.Users",
+          "keys": [
+            {
+              "ref": [
+                "id"
+              ]
+            }
+          ]
+        },
+        "dpManager": {
+          "@Common.Text": {
+            "=": "dpManager.userName"
+          },
+          "@Common.TextArrangement": {
+            "#": "TextFirst"
+          },
+          "@Common.ValueList.Label": "Users",
+          "@Common.ValueList.CollectionPath": "Users",
+          "@Common.ValueList.Parameters": [
+            {
+              "$Type": "Common.ValueListParameterInOut",
+              "ValueListProperty": "userId",
+              "LocalDataProperty": {
+                "=": "dpManager_userId"
+              }
+            },
+            {
+              "$Type": "Common.ValueListParameterDisplayOnly",
+              "ValueListProperty": "userName"
+            },
+            {
+              "$Type": "Common.ValueListParameterDisplayOnly",
+              "ValueListProperty": "userINo"
+            }
+          ],
+          "type": "PMToolUser",
+          "target": "sap.sdcpmtool.master.Users",
+          "keys": [
+            {
+              "ref": [
+                "id"
+              ]
+            }
+          ]
+        },
+        "projectPhase": {
+          "type": "ProjectPhaseField",
+          "target": "sap.sdcpmtool.master.ProjectPhaseFields",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "muCompanyCode": {
+          "type": "CompanyCode",
+          "target": "sap.sdcpmtool.master.CompanyCodes",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "projectCurrency": {
+          "@title": "{i18n>Currency}",
+          "@description": "{i18n>CurrencyCode.Description}",
+          "type": "Currency",
+          "target": "sap.common.Currencies",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "projectDescription": {
+          "type": "cds.String"
+        },
+        "projectArchiveFlag": {
+          "type": "cds.Boolean"
+        }
+      }
+    },
+    "ProjectService": {
+      "@source": "projectService.cds",
+      "kind": "service"
+    },
+    "ProjectService.Projects": {
+      "kind": "entity",
+      "@odata.draft.enabled": true,
+      "@Capabilities.SearchRestrictions.Searchable": false,
+      "query": {
+        "SELECT": {
+          "from": {
+            "ref": [
+              "sap.sdcpmtool.transaction.Projects"
+            ]
+          },
+          "columns": [
+            "*"
+          ],
+          "excluding": [
+            "createdBy",
+            "modifiedBy"
+          ]
+        }
+      },
+      "elements": {
+        "ID": {
+          "@Core.Computed": true,
+          "@odata.Type": "Edm.String",
+          "key": true,
+          "type": "cds.UUID"
+        },
+        "createdAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedAt}",
+          "@readonly": true,
+          "@odata.on.insert": {
+            "#": "now"
+          },
+          "type": "cds.Timestamp"
+        },
+        "modifiedAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@cds.on.update": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedAt}",
+          "@readonly": true,
+          "@odata.on.update": {
+            "#": "now"
+          },
+          "type": "cds.Timestamp"
+        },
+        "projectId": {
+          "type": "cds.Integer"
+        },
+        "ptdProjectId": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "crmOppId": {
+          "type": "cds.String",
+          "length": 9
+        },
+        "customerName": {
+          "type": "cds.String",
+          "length": 30
+        },
+        "projectName": {
+          "@Common.FieldControl": {
+            "#": "Mandatory"
+          },
+          "type": "cds.String",
+          "length": 30
+        },
+        "projectType": {
+          "@Common.Text": {
+            "=": "projectType.name"
+          },
+          "@Common.TextFor": {
+            "=": "projectType.code"
+          },
+          "@Common.TextArrangement": {
+            "#": "TextOnly"
+          },
+          "@Common.ValueListWithFixedValues": true,
+          "@Common.ValueList.Label": "Project Types",
+          "@Common.ValueList.CollectionPath": "ProjectTypes",
+          "@Common.ValueList.Parameters": [
+            {
+              "$Type": "Common.ValueListParameterInOut",
+              "ValueListProperty": "code",
+              "LocalDataProperty": {
+                "=": "projectType_code"
+              }
+            },
+            {
+              "$Type": "Common.ValueListParameterDisplayOnly",
+              "ValueListProperty": "name"
+            }
+          ],
+          "type": "ProjectType",
+          "target": "ProjectService.ProjectTypes",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "projectMode": {
+          "@Common.Text": {
+            "=": "projectMode.name"
+          },
+          "@Common.TextArrangement": {
+            "#": "TextOnly"
+          },
+          "@Common.ValueListWithFixedValues": true,
+          "@Common.ValueList.Label": "Project Modes",
+          "@Common.ValueList.CollectionPath": "ProjectModes",
+          "@Common.ValueList.Parameters": [
+            {
+              "$Type": "Common.ValueListParameterInOut",
+              "ValueListProperty": "code",
+              "LocalDataProperty": {
+                "=": "projectMode_code"
+              }
+            },
+            {
+              "$Type": "Common.ValueListParameterDisplayOnly",
+              "ValueListProperty": "name"
+            }
+          ],
+          "type": "ProjectMode",
+          "target": "ProjectService.ProjectModes",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "projectStatus": {
+          "@Common.Text": {
+            "=": "projectStatus.name"
+          },
+          "@Common.TextArrangement": {
+            "#": "TextOnly"
+          },
+          "@Common.ValueListWithFixedValues": true,
+          "@Common.ValueList.Label": "Project Status",
+          "@Common.ValueList.CollectionPath": "ProjectStatuss",
+          "@Common.ValueList.Parameters": [
+            {
+              "$Type": "Common.ValueListParameterInOut",
+              "ValueListProperty": "code",
+              "LocalDataProperty": {
+                "=": "projectStatus_code"
+              }
+            },
+            {
+              "$Type": "Common.ValueListParameterDisplayOnly",
+              "ValueListProperty": "name"
+            }
+          ],
+          "type": "ProjectStatus",
+          "target": "ProjectService.ProjectStatuss",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "actualStartDate": {
+          "@Common.FieldControl": {
+            "#": "Mandatory"
+          },
+          "type": "cds.Date"
+        },
+        "plannedStartDate": {
+          "type": "cds.Date"
+        },
+        "plannedEndDate": {
+          "type": "cds.Date"
+        },
+        "region": {
+          "@Common.ValueList.Label": "Regions",
+          "@Common.ValueList.CollectionPath": "Regions",
+          "@Common.ValueList.Parameters": [
+            {
+              "$Type": "Common.ValueListParameterInOut",
+              "ValueListProperty": "code",
+              "LocalDataProperty": {
+                "=": "region_code"
+              }
+            },
+            {
+              "$Type": "Common.ValueListParameterDisplayOnly",
+              "ValueListProperty": "name"
+            }
+          ],
+          "type": "Region",
+          "target": "ProjectService.Regions",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "subRegion": {
+          "@Common.Text": {
+            "=": "subRegion.name"
+          },
+          "@Common.TextArrangement": {
+            "#": "TextOnly"
+          },
+          "@Common.ValueList.Label": "Sub Region",
+          "@Common.ValueList.CollectionPath": "SubRegions",
+          "@Common.ValueList.Parameters": [
+            {
+              "$Type": "Common.ValueListParameterInOut",
+              "ValueListProperty": "region_code",
+              "LocalDataProperty": {
+                "=": "region_code"
+              }
+            },
+            {
+              "$Type": "Common.ValueListParameterInOut",
+              "ValueListProperty": "code",
+              "LocalDataProperty": {
+                "=": "subRegion_code"
+              }
+            },
+            {
+              "$Type": "Common.ValueListParameterDisplayOnly",
+              "ValueListProperty": "name"
+            }
+          ],
+          "type": "SubRegion",
+          "target": "ProjectService.SubRegions",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "country": {
+          "@title": "{i18n>Country}",
+          "@description": "{i18n>CountryCode.Description}",
+          "type": "Country",
+          "target": "ProjectService.Countries",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "primaryDeliveryCenter": {
+          "@Common.Text": {
+            "=": "primaryDeliveryCenter.name"
+          },
+          "@Common.TextArrangement": {
+            "#": "TextOnly"
+          },
+          "@Common.ValueList.Label": "Delivery Center",
+          "@Common.ValueList.CollectionPath": "DeliveryCenters",
+          "@Common.ValueList.Parameters": [
+            {
+              "$Type": "Common.ValueListParameterInOut",
+              "ValueListProperty": "code",
+              "LocalDataProperty": {
+                "=": "primaryDeliveryCenter_code"
+              }
+            },
+            {
+              "$Type": "Common.ValueListParameterDisplayOnly",
+              "ValueListProperty": "name"
+            }
+          ],
+          "type": "DeliveryCenter",
+          "target": "ProjectService.DeliveryCenters",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "bcpStatus": {
+          "@Common.Text": {
+            "=": "bcpStatus.name"
+          },
+          "@Common.TextArrangement": {
+            "#": "TextOnly"
+          },
+          "@Common.ValueListWithFixedValues": true,
+          "@Common.ValueList.Label": "BCP Status",
+          "@Common.ValueList.CollectionPath": "BCPStatusFields",
+          "@Common.ValueList.Parameters": [
+            {
+              "$Type": "Common.ValueListParameterInOut",
+              "ValueListProperty": "code",
+              "LocalDataProperty": {
+                "=": "bcpStatus_code"
+              }
+            },
+            {
+              "$Type": "Common.ValueListParameterDisplayOnly",
+              "ValueListProperty": "name"
+            }
+          ],
+          "type": "BCPStatusField",
+          "target": "ProjectService.BCPStatusFields",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "qaLeadId": {
+          "@Common.Text": {
+            "=": "qaLeadId.userName"
+          },
+          "@Common.TextArrangement": {
+            "#": "TextFirst"
+          },
+          "@Common.ValueList.Label": "Users",
+          "@Common.ValueList.CollectionPath": "Users",
+          "@Common.ValueList.Parameters": [
+            {
+              "$Type": "Common.ValueListParameterInOut",
+              "ValueListProperty": "userId",
+              "LocalDataProperty": {
+                "=": "qaLeadId_userId"
+              }
+            },
+            {
+              "$Type": "Common.ValueListParameterDisplayOnly",
+              "ValueListProperty": "userName"
+            },
+            {
+              "$Type": "Common.ValueListParameterDisplayOnly",
+              "ValueListProperty": "userINo"
+            }
+          ],
+          "type": "PMToolUser",
+          "target": "ProjectService.Users",
+          "keys": [
+            {
+              "ref": [
+                "id"
+              ]
+            }
+          ]
+        },
+        "factoryRelevant": {
+          "@Common.Text": {
+            "=": "factoryRelevant.name"
+          },
+          "@Common.TextArrangement": {
+            "#": "TextOnly"
+          },
+          "@Common.ValueList.Label": "Factory Relevant",
+          "@Common.ValueList.CollectionPath": "FactoryRelevantFields",
+          "@Common.ValueList.Parameters": [
+            {
+              "$Type": "Common.ValueListParameterInOut",
+              "ValueListProperty": "code",
+              "LocalDataProperty": {
+                "=": "factoryRelevant_code"
+              }
+            },
+            {
+              "$Type": "Common.ValueListParameterDisplayOnly",
+              "ValueListProperty": "name"
+            }
+          ],
+          "type": "FactoryRelevantField",
+          "target": "ProjectService.FactoryRelevantFields",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "projectSize": {
+          "type": "ProjectSize",
+          "target": "ProjectService.ProjectSizes",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "customerIndustry": {
+          "@Common.Text": {
+            "=": "customerIndustry.name"
+          },
+          "@Common.TextArrangement": {
+            "#": "TextOnly"
+          },
+          "@Common.ValueList.Label": "Customer Industry",
+          "@Common.ValueList.CollectionPath": "CustomerIndustries",
+          "@Common.ValueList.Parameters": [
+            {
+              "$Type": "Common.ValueListParameterInOut",
+              "ValueListProperty": "code",
+              "LocalDataProperty": {
+                "=": "customerIndustry_code"
+              }
+            },
+            {
+              "$Type": "Common.ValueListParameterDisplayOnly",
+              "ValueListProperty": "name"
+            }
+          ],
+          "type": "CustomerIndustry",
+          "target": "ProjectService.CustomerIndustries",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "projectManager": {
+          "@Common.Text": {
+            "=": "projectManager.userName"
+          },
+          "@Common.TextArrangement": {
+            "#": "TextFirst"
+          },
+          "@Common.FieldControl": {
+            "#": "Mandatory"
+          },
+          "@Common.ValueList.Label": "Users",
+          "@Common.ValueList.CollectionPath": "Users",
+          "@Common.ValueList.Parameters": [
+            {
+              "$Type": "Common.ValueListParameterInOut",
+              "ValueListProperty": "userId",
+              "LocalDataProperty": {
+                "=": "projectManager_userId"
+              }
+            },
+            {
+              "$Type": "Common.ValueListParameterDisplayOnly",
+              "ValueListProperty": "userName"
+            },
+            {
+              "$Type": "Common.ValueListParameterDisplayOnly",
+              "ValueListProperty": "userINo"
+            }
+          ],
+          "type": "PMToolUser",
+          "target": "ProjectService.Users",
+          "keys": [
+            {
+              "ref": [
+                "id"
+              ]
+            }
+          ]
+        },
+        "dpManager": {
+          "@Common.Text": {
+            "=": "dpManager.userName"
+          },
+          "@Common.TextArrangement": {
+            "#": "TextFirst"
+          },
+          "@Common.ValueList.Label": "Users",
+          "@Common.ValueList.CollectionPath": "Users",
+          "@Common.ValueList.Parameters": [
+            {
+              "$Type": "Common.ValueListParameterInOut",
+              "ValueListProperty": "userId",
+              "LocalDataProperty": {
+                "=": "dpManager_userId"
+              }
+            },
+            {
+              "$Type": "Common.ValueListParameterDisplayOnly",
+              "ValueListProperty": "userName"
+            },
+            {
+              "$Type": "Common.ValueListParameterDisplayOnly",
+              "ValueListProperty": "userINo"
+            }
+          ],
+          "type": "PMToolUser",
+          "target": "ProjectService.Users",
+          "keys": [
+            {
+              "ref": [
+                "id"
+              ]
+            }
+          ]
+        },
+        "projectPhase": {
+          "type": "ProjectPhaseField",
+          "target": "ProjectService.ProjectPhaseFields",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "muCompanyCode": {
+          "type": "CompanyCode",
+          "target": "ProjectService.CompanyCodes",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "projectCurrency": {
+          "@title": "{i18n>Currency}",
+          "@description": "{i18n>CurrencyCode.Description}",
+          "type": "Currency",
+          "target": "ProjectService.Currencies",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "projectDescription": {
+          "type": "cds.String"
+        },
+        "projectArchiveFlag": {
+          "type": "cds.Boolean"
+        }
+      }
+    },
+    "ProjectService.Users": {
+      "kind": "entity",
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.sdcpmtool.master.Users"
+          ]
+        }
+      },
+      "elements": {
+        "createdAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedAt}",
+          "@readonly": true,
+          "@odata.on.insert": {
+            "#": "now"
+          },
+          "type": "cds.Timestamp"
+        },
+        "createdBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedBy}",
+          "@readonly": true,
+          "@odata.on.insert": {
+            "#": "user"
+          },
+          "@description": "{i18n>UserID.Description}",
+          "type": "User",
+          "length": 255
+        },
+        "modifiedAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@cds.on.update": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedAt}",
+          "@readonly": true,
+          "@odata.on.update": {
+            "#": "now"
+          },
+          "type": "cds.Timestamp"
+        },
+        "modifiedBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@cds.on.update": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedBy}",
+          "@readonly": true,
+          "@odata.on.update": {
+            "#": "user"
+          },
+          "@description": "{i18n>UserID.Description}",
+          "type": "User",
+          "length": 255
+        },
+        "id": {
+          "@Core.Computed": true,
+          "@odata.Type": "Edm.String",
+          "key": true,
+          "type": "cds.UUID"
+        },
+        "seqId": {
+          "@readonly": true,
+          "type": "cds.Integer",
+          "default": {
+            "val": 0
+          }
+        },
+        "userId": {
+          "@Common.ValueList.CollectionPath": "Users",
+          "@Common.ValueList.Label": "",
+          "@Common.ValueList.Parameters": [
+            {
+              "$Type": "Common.ValueListParameterInOut",
+              "LocalDataProperty": {
+                "=": "userId"
+              },
+              "ValueListProperty": "userId"
+            },
+            {
+              "$Type": "Common.ValueListParameterDisplayOnly",
+              "ValueListProperty": "userName"
+            }
+          ],
+          "@Common.ValueList.SearchSupported": true,
+          "@title": "{i18n>UserID}",
+          "@description": "{i18n>UserID.Description}",
+          "type": "User",
+          "length": 255
+        },
+        "userINo": {
+          "@Common.ValueList.CollectionPath": "Users",
+          "@Common.ValueList.Label": "",
+          "@Common.ValueList.Parameters": [
+            {
+              "$Type": "Common.ValueListParameterInOut",
+              "LocalDataProperty": {
+                "=": "userINo"
+              },
+              "ValueListProperty": "userINo"
+            },
+            {
+              "$Type": "Common.ValueListParameterDisplayOnly",
+              "ValueListProperty": "userName"
+            }
+          ],
+          "@Common.ValueList.SearchSupported": true,
+          "type": "cds.String",
+          "length": 10
+        },
+        "userName": {
+          "@Common.ValueList.CollectionPath": "Users",
+          "@Common.ValueList.Label": "",
+          "@Common.ValueList.Parameters": [
+            {
+              "$Type": "Common.ValueListParameterInOut",
+              "LocalDataProperty": {
+                "=": "userName"
+              },
+              "ValueListProperty": "userName"
+            },
+            {
+              "$Type": "Common.ValueListParameterDisplayOnly",
+              "ValueListProperty": "userINo"
+            }
+          ],
+          "@Common.ValueList.SearchSupported": true,
+          "type": "cds.String",
+          "length": 50
+        }
+      }
+    },
+    "UserMangService": {
+      "@source": "userMangService.cds",
+      "kind": "service"
+    },
+    "UserMangService.Users": {
+      "kind": "entity",
+      "@odata.draft.enable": true,
+      "@Common.SemanticKey": [
+        {
+          "=": "id"
+        }
+      ],
+      "@UI.Identification": [
+        {
+          "Value": {
+            "=": "seqId"
+          }
+        }
+      ],
+      "@UI.HeaderInfo.TypeName": "{i18n>User}",
+      "@UI.HeaderInfo.TypeNamePlural": "{i18n>Users}",
+      "@UI.HeaderInfo.Title.$Type": "UI.DataField",
+      "@UI.HeaderInfo.Title.Value": {
+        "=": "seqId"
+      },
+      "@UI.HeaderInfo.Description.$Type": "UI.DataField",
+      "@UI.HeaderInfo.Description.Value": "{i18n>seqId}",
+      "@UI.PresentationVariant.Text": "Default",
+      "@UI.PresentationVariant.Visualizations": [
+        "@UI.LineItem"
+      ],
+      "@UI.PresentationVariant.SortOrder": [
+        {
+          "$Type": "Common.SortOrderType",
+          "Property": {
+            "=": "seqId"
+          },
+          "Descending": false
+        }
+      ],
+      "@UI.SelectionFields": [
+        {
+          "=": "userINo"
+        },
+        {
+          "=": "userName"
+        },
+        {
+          "=": "userId"
+        }
+      ],
+      "@UI.LineItem": [
+        {
+          "Value": {
+            "=": "seqId"
+          },
+          "Label": "{i18n>S.No}"
+        },
+        {
+          "Value": {
+            "=": "userINo"
+          },
+          "Label": "{i18n>I-Number}"
+        },
+        {
+          "Value": {
+            "=": "userName"
+          },
+          "Label": "{i18n>User-Name}"
+        },
+        {
+          "Value": {
+            "=": "userId"
+          },
+          "Label": "{i18n>Email-ID}"
+        }
+      ],
+      "@UI.Facets": [
+        {
+          "$Type": "UI.CollectionFacet",
+          "Label": "{i18n>UserDetails}",
+          "ID": "seqId",
+          "Facets": [
+            {
+              "$Type": "UI.ReferenceFacet",
+              "ID": "UserInformation",
+              "Target": "@UI.FieldGroup#UserInformation",
+              "Label": "UserInformation"
+            }
+          ]
+        }
+      ],
+      "@UI.FieldGroup#UserInformation.Data": [
+        {
+          "Value": {
+            "=": "userId"
+          },
+          "Label": "Email-ID"
+        },
+        {
+          "Value": {
+            "=": "userINo"
+          },
+          "Label": "I-Number"
+        },
+        {
+          "Value": {
+            "=": "userName"
+          },
+          "Label": "User-Name"
+        }
+      ],
+      "query": {
+        "SELECT": {
+          "from": {
+            "ref": [
+              "sap.sdcpmtool.master.Users"
+            ]
+          },
+          "columns": [
+            "*"
+          ],
+          "excluding": [
+            "createdBy",
+            "modifiedBy"
+          ]
+        }
+      },
+      "elements": {
+        "createdAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedAt}",
+          "@readonly": true,
+          "@odata.on.insert": {
+            "#": "now"
+          },
+          "type": "cds.Timestamp"
+        },
+        "modifiedAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@cds.on.update": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedAt}",
+          "@readonly": true,
+          "@odata.on.update": {
+            "#": "now"
+          },
+          "type": "cds.Timestamp"
+        },
+        "id": {
+          "@Core.Computed": true,
+          "@odata.Type": "Edm.String",
+          "key": true,
+          "type": "cds.UUID"
+        },
+        "seqId": {
+          "@readonly": true,
+          "type": "cds.Integer",
+          "default": {
+            "val": 0
+          }
+        },
+        "userId": {
+          "@Common.ValueList.CollectionPath": "Users",
+          "@Common.ValueList.Label": "",
+          "@Common.ValueList.Parameters": [
+            {
+              "$Type": "Common.ValueListParameterInOut",
+              "LocalDataProperty": {
+                "=": "userId"
+              },
+              "ValueListProperty": "userId"
+            },
+            {
+              "$Type": "Common.ValueListParameterDisplayOnly",
+              "ValueListProperty": "userName"
+            }
+          ],
+          "@Common.ValueList.SearchSupported": true,
+          "@title": "{i18n>UserID}",
+          "@description": "{i18n>UserID.Description}",
+          "type": "User",
+          "length": 255
+        },
+        "userINo": {
+          "@Common.ValueList.CollectionPath": "Users",
+          "@Common.ValueList.Label": "",
+          "@Common.ValueList.Parameters": [
+            {
+              "$Type": "Common.ValueListParameterInOut",
+              "LocalDataProperty": {
+                "=": "userINo"
+              },
+              "ValueListProperty": "userINo"
+            },
+            {
+              "$Type": "Common.ValueListParameterDisplayOnly",
+              "ValueListProperty": "userName"
+            }
+          ],
+          "@Common.ValueList.SearchSupported": true,
+          "type": "cds.String",
+          "length": 10
+        },
+        "userName": {
+          "@Common.ValueList.CollectionPath": "Users",
+          "@Common.ValueList.Label": "",
+          "@Common.ValueList.Parameters": [
+            {
+              "$Type": "Common.ValueListParameterInOut",
+              "LocalDataProperty": {
+                "=": "userName"
+              },
+              "ValueListProperty": "userName"
+            },
+            {
+              "$Type": "Common.ValueListParameterDisplayOnly",
+              "ValueListProperty": "userINo"
+            }
+          ],
+          "@Common.ValueList.SearchSupported": true,
+          "type": "cds.String",
+          "length": 50
+        }
+      }
+    },
+    "ManagerService": {
+      "@source": "managerService.cds",
+      "kind": "service",
+      "@requires": "sdcpmtool_managers"
+    },
+    "ManagerService.MyProjects": {
+      "kind": "entity",
+      "@Capabilities.InsertRestrictions.Insertable": false,
+      "@Capabilities.UpdateRestrictions.Updatable": true,
+      "@Capabilities.DeleteRestrictions.Deletable": false,
+      "@Capabilities.SearchRestrictions.Searchable": false,
+      "@odata.draft.enabled": true,
+      "query": {
+        "SELECT": {
+          "from": {
+            "ref": [
+              "sap.sdcpmtool.transaction.Projects"
+            ]
+          },
+          "columns": [
+            "*"
+          ]
+        }
+      },
+      "elements": {
+        "ID": {
+          "@Core.Computed": true,
+          "@odata.Type": "Edm.String",
+          "key": true,
+          "type": "cds.UUID"
+        },
+        "createdAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedAt}",
+          "@readonly": true,
+          "@odata.on.insert": {
+            "#": "now"
+          },
+          "type": "cds.Timestamp"
+        },
+        "createdBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedBy}",
+          "@readonly": true,
+          "@odata.on.insert": {
+            "#": "user"
+          },
+          "@description": "{i18n>UserID.Description}",
+          "type": "User",
+          "length": 255
+        },
+        "modifiedAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@cds.on.update": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedAt}",
+          "@readonly": true,
+          "@odata.on.update": {
+            "#": "now"
+          },
+          "type": "cds.Timestamp"
+        },
+        "modifiedBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@cds.on.update": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedBy}",
+          "@readonly": true,
+          "@odata.on.update": {
+            "#": "user"
+          },
+          "@description": "{i18n>UserID.Description}",
+          "type": "User",
+          "length": 255
+        },
+        "projectId": {
+          "type": "cds.Integer"
+        },
+        "ptdProjectId": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "crmOppId": {
+          "type": "cds.String",
+          "length": 9
+        },
+        "customerName": {
+          "type": "cds.String",
+          "length": 30
+        },
+        "projectName": {
+          "@Common.FieldControl": {
+            "#": "Mandatory"
+          },
+          "type": "cds.String",
+          "length": 30
+        },
+        "projectType": {
+          "@Common.Text": {
+            "=": "projectType.name"
+          },
+          "@Common.TextFor": {
+            "=": "projectType.code"
+          },
+          "@Common.TextArrangement": {
+            "#": "TextOnly"
+          },
+          "@Common.ValueListWithFixedValues": true,
+          "@Common.ValueList.Label": "Project Types",
+          "@Common.ValueList.CollectionPath": "ProjectTypes",
+          "@Common.ValueList.Parameters": [
+            {
+              "$Type": "Common.ValueListParameterInOut",
+              "ValueListProperty": "code",
+              "LocalDataProperty": {
+                "=": "projectType_code"
+              }
+            },
+            {
+              "$Type": "Common.ValueListParameterDisplayOnly",
+              "ValueListProperty": "name"
+            }
+          ],
+          "type": "ProjectType",
+          "target": "ManagerService.ProjectTypes",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "projectMode": {
+          "@Common.Text": {
+            "=": "projectMode.name"
+          },
+          "@Common.TextArrangement": {
+            "#": "TextOnly"
+          },
+          "@Common.ValueListWithFixedValues": true,
+          "@Common.ValueList.Label": "Project Modes",
+          "@Common.ValueList.CollectionPath": "ProjectModes",
+          "@Common.ValueList.Parameters": [
+            {
+              "$Type": "Common.ValueListParameterInOut",
+              "ValueListProperty": "code",
+              "LocalDataProperty": {
+                "=": "projectMode_code"
+              }
+            },
+            {
+              "$Type": "Common.ValueListParameterDisplayOnly",
+              "ValueListProperty": "name"
+            }
+          ],
+          "type": "ProjectMode",
+          "target": "ManagerService.ProjectModes",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "projectStatus": {
+          "@Common.Text": {
+            "=": "projectStatus.name"
+          },
+          "@Common.TextArrangement": {
+            "#": "TextOnly"
+          },
+          "@Common.ValueListWithFixedValues": true,
+          "@Common.ValueList.Label": "Project Status",
+          "@Common.ValueList.CollectionPath": "ProjectStatuss",
+          "@Common.ValueList.Parameters": [
+            {
+              "$Type": "Common.ValueListParameterInOut",
+              "ValueListProperty": "code",
+              "LocalDataProperty": {
+                "=": "projectStatus_code"
+              }
+            },
+            {
+              "$Type": "Common.ValueListParameterDisplayOnly",
+              "ValueListProperty": "name"
+            }
+          ],
+          "type": "ProjectStatus",
+          "target": "ManagerService.ProjectStatuss",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "actualStartDate": {
+          "@Common.FieldControl": {
+            "#": "Mandatory"
+          },
+          "type": "cds.Date"
+        },
+        "plannedStartDate": {
+          "type": "cds.Date"
+        },
+        "plannedEndDate": {
+          "type": "cds.Date"
+        },
+        "region": {
+          "@Common.ValueList.Label": "Regions",
+          "@Common.ValueList.CollectionPath": "Regions",
+          "@Common.ValueList.Parameters": [
+            {
+              "$Type": "Common.ValueListParameterInOut",
+              "ValueListProperty": "code",
+              "LocalDataProperty": {
+                "=": "region_code"
+              }
+            },
+            {
+              "$Type": "Common.ValueListParameterDisplayOnly",
+              "ValueListProperty": "name"
+            }
+          ],
+          "type": "Region",
+          "target": "ManagerService.Regions",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "subRegion": {
+          "@Common.Text": {
+            "=": "subRegion.name"
+          },
+          "@Common.TextArrangement": {
+            "#": "TextOnly"
+          },
+          "@Common.ValueList.Label": "Sub Region",
+          "@Common.ValueList.CollectionPath": "SubRegions",
+          "@Common.ValueList.Parameters": [
+            {
+              "$Type": "Common.ValueListParameterInOut",
+              "ValueListProperty": "region_code",
+              "LocalDataProperty": {
+                "=": "region_code"
+              }
+            },
+            {
+              "$Type": "Common.ValueListParameterInOut",
+              "ValueListProperty": "code",
+              "LocalDataProperty": {
+                "=": "subRegion_code"
+              }
+            },
+            {
+              "$Type": "Common.ValueListParameterDisplayOnly",
+              "ValueListProperty": "name"
+            }
+          ],
+          "type": "SubRegion",
+          "target": "ManagerService.SubRegions",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "country": {
+          "@title": "{i18n>Country}",
+          "@description": "{i18n>CountryCode.Description}",
+          "type": "Country",
+          "target": "ManagerService.Countries",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "primaryDeliveryCenter": {
+          "@Common.Text": {
+            "=": "primaryDeliveryCenter.name"
+          },
+          "@Common.TextArrangement": {
+            "#": "TextOnly"
+          },
+          "@Common.ValueList.Label": "Delivery Center",
+          "@Common.ValueList.CollectionPath": "DeliveryCenters",
+          "@Common.ValueList.Parameters": [
+            {
+              "$Type": "Common.ValueListParameterInOut",
+              "ValueListProperty": "code",
+              "LocalDataProperty": {
+                "=": "primaryDeliveryCenter_code"
+              }
+            },
+            {
+              "$Type": "Common.ValueListParameterDisplayOnly",
+              "ValueListProperty": "name"
+            }
+          ],
+          "type": "DeliveryCenter",
+          "target": "ManagerService.DeliveryCenters",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "bcpStatus": {
+          "@Common.Text": {
+            "=": "bcpStatus.name"
+          },
+          "@Common.TextArrangement": {
+            "#": "TextOnly"
+          },
+          "@Common.ValueListWithFixedValues": true,
+          "@Common.ValueList.Label": "BCP Status",
+          "@Common.ValueList.CollectionPath": "BCPStatusFields",
+          "@Common.ValueList.Parameters": [
+            {
+              "$Type": "Common.ValueListParameterInOut",
+              "ValueListProperty": "code",
+              "LocalDataProperty": {
+                "=": "bcpStatus_code"
+              }
+            },
+            {
+              "$Type": "Common.ValueListParameterDisplayOnly",
+              "ValueListProperty": "name"
+            }
+          ],
+          "type": "BCPStatusField",
+          "target": "ManagerService.BCPStatusFields",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "qaLeadId": {
+          "@Common.Text": {
+            "=": "qaLeadId.userName"
+          },
+          "@Common.TextArrangement": {
+            "#": "TextFirst"
+          },
+          "@Common.ValueList.Label": "Users",
+          "@Common.ValueList.CollectionPath": "Users",
+          "@Common.ValueList.Parameters": [
+            {
+              "$Type": "Common.ValueListParameterInOut",
+              "ValueListProperty": "userId",
+              "LocalDataProperty": {
+                "=": "qaLeadId_userId"
+              }
+            },
+            {
+              "$Type": "Common.ValueListParameterDisplayOnly",
+              "ValueListProperty": "userName"
+            },
+            {
+              "$Type": "Common.ValueListParameterDisplayOnly",
+              "ValueListProperty": "userINo"
+            }
+          ],
+          "type": "PMToolUser",
+          "target": "sap.sdcpmtool.master.Users",
+          "keys": [
+            {
+              "ref": [
+                "id"
+              ]
+            }
+          ]
+        },
+        "factoryRelevant": {
+          "@Common.Text": {
+            "=": "factoryRelevant.name"
+          },
+          "@Common.TextArrangement": {
+            "#": "TextOnly"
+          },
+          "@Common.ValueList.Label": "Factory Relevant",
+          "@Common.ValueList.CollectionPath": "FactoryRelevantFields",
+          "@Common.ValueList.Parameters": [
+            {
+              "$Type": "Common.ValueListParameterInOut",
+              "ValueListProperty": "code",
+              "LocalDataProperty": {
+                "=": "factoryRelevant_code"
+              }
+            },
+            {
+              "$Type": "Common.ValueListParameterDisplayOnly",
+              "ValueListProperty": "name"
+            }
+          ],
+          "type": "FactoryRelevantField",
+          "target": "ManagerService.FactoryRelevantFields",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "projectSize": {
+          "type": "ProjectSize",
+          "target": "ManagerService.ProjectSizes",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "customerIndustry": {
+          "@Common.Text": {
+            "=": "customerIndustry.name"
+          },
+          "@Common.TextArrangement": {
+            "#": "TextOnly"
+          },
+          "@Common.ValueList.Label": "Customer Industry",
+          "@Common.ValueList.CollectionPath": "CustomerIndustries",
+          "@Common.ValueList.Parameters": [
+            {
+              "$Type": "Common.ValueListParameterInOut",
+              "ValueListProperty": "code",
+              "LocalDataProperty": {
+                "=": "customerIndustry_code"
+              }
+            },
+            {
+              "$Type": "Common.ValueListParameterDisplayOnly",
+              "ValueListProperty": "name"
+            }
+          ],
+          "type": "CustomerIndustry",
+          "target": "ManagerService.CustomerIndustries",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "projectManager": {
+          "@Common.Text": {
+            "=": "projectManager.userName"
+          },
+          "@Common.TextArrangement": {
+            "#": "TextFirst"
+          },
+          "@Common.FieldControl": {
+            "#": "Mandatory"
+          },
+          "@Common.ValueList.Label": "Users",
+          "@Common.ValueList.CollectionPath": "Users",
+          "@Common.ValueList.Parameters": [
+            {
+              "$Type": "Common.ValueListParameterInOut",
+              "ValueListProperty": "userId",
+              "LocalDataProperty": {
+                "=": "projectManager_userId"
+              }
+            },
+            {
+              "$Type": "Common.ValueListParameterDisplayOnly",
+              "ValueListProperty": "userName"
+            },
+            {
+              "$Type": "Common.ValueListParameterDisplayOnly",
+              "ValueListProperty": "userINo"
+            }
+          ],
+          "type": "PMToolUser",
+          "target": "sap.sdcpmtool.master.Users",
+          "keys": [
+            {
+              "ref": [
+                "id"
+              ]
+            }
+          ]
+        },
+        "dpManager": {
+          "@Common.Text": {
+            "=": "dpManager.userName"
+          },
+          "@Common.TextArrangement": {
+            "#": "TextFirst"
+          },
+          "@Common.ValueList.Label": "Users",
+          "@Common.ValueList.CollectionPath": "Users",
+          "@Common.ValueList.Parameters": [
+            {
+              "$Type": "Common.ValueListParameterInOut",
+              "ValueListProperty": "userId",
+              "LocalDataProperty": {
+                "=": "dpManager_userId"
+              }
+            },
+            {
+              "$Type": "Common.ValueListParameterDisplayOnly",
+              "ValueListProperty": "userName"
+            },
+            {
+              "$Type": "Common.ValueListParameterDisplayOnly",
+              "ValueListProperty": "userINo"
+            }
+          ],
+          "type": "PMToolUser",
+          "target": "sap.sdcpmtool.master.Users",
+          "keys": [
+            {
+              "ref": [
+                "id"
+              ]
+            }
+          ]
+        },
+        "projectPhase": {
+          "type": "ProjectPhaseField",
+          "target": "ManagerService.ProjectPhaseFields",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "muCompanyCode": {
+          "type": "CompanyCode",
+          "target": "ManagerService.CompanyCodes",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "projectCurrency": {
+          "@title": "{i18n>Currency}",
+          "@description": "{i18n>CurrencyCode.Description}",
+          "type": "Currency",
+          "target": "ManagerService.Currencies",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "projectDescription": {
+          "type": "cds.String"
+        },
+        "projectArchiveFlag": {
+          "type": "cds.Boolean"
+        }
+      }
+    },
+    "ManagerService.User": {
+      "kind": "entity",
+      "elements": {
+        "username": {
+          "key": true,
+          "type": "cds.String"
+        }
+      }
+    },
+    "Language": {
+      "kind": "type",
+      "@title": "{i18n>Language}",
+      "@description": "{i18n>LanguageCode.Description}",
+      "type": "cds.Association",
+      "target": "sap.common.Languages",
+      "keys": [
+        {
+          "ref": [
+            "code"
+          ]
+        }
+      ]
+    },
+    "Currency": {
+      "kind": "type",
+      "@title": "{i18n>Currency}",
+      "@description": "{i18n>CurrencyCode.Description}",
+      "type": "cds.Association",
+      "target": "sap.common.Currencies",
+      "keys": [
+        {
+          "ref": [
+            "code"
+          ]
+        }
+      ]
+    },
+    "Country": {
+      "kind": "type",
+      "@title": "{i18n>Country}",
+      "@description": "{i18n>CountryCode.Description}",
+      "type": "cds.Association",
+      "target": "sap.common.Countries",
+      "keys": [
+        {
+          "ref": [
+            "code"
+          ]
+        }
+      ]
+    },
+    "sap.common": {
+      "kind": "context"
+    },
+    "sap.common.Languages": {
+      "kind": "entity",
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "@UI.Identification": [
+        {
+          "Value": {
+            "=": "name"
+          }
+        }
+      ],
+      "@cds.odata.valuelist": true,
+      "includes": [
+        "sap.common.CodeList"
+      ],
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "descr": {
+          "@title": "{i18n>Description}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 1000
+        },
+        "code": {
+          "@title": "{i18n>LanguageCode}",
+          "@Common.Text": {
+            "=": "name"
+          },
+          "key": true,
+          "type": "cds.String",
+          "length": 14
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "sap.common.Languages.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "sap.common.Languages.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "sap.common.Countries": {
+      "kind": "entity",
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "@UI.Identification": [
+        {
+          "Value": {
+            "=": "name"
+          }
+        }
+      ],
+      "@cds.odata.valuelist": true,
+      "includes": [
+        "sap.common.CodeList"
+      ],
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "descr": {
+          "@title": "{i18n>Description}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 1000
+        },
+        "code": {
+          "@title": "{i18n>CountryCode}",
+          "@Common.Text": {
+            "=": "name"
+          },
+          "key": true,
+          "type": "cds.String",
+          "length": 3
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "sap.common.Countries.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "sap.common.Countries.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "sap.common.Currencies": {
+      "kind": "entity",
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "@UI.Identification": [
+        {
+          "Value": {
+            "=": "name"
+          }
+        }
+      ],
+      "@cds.odata.valuelist": true,
+      "includes": [
+        "sap.common.CodeList"
+      ],
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "descr": {
+          "@title": "{i18n>Description}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 1000
+        },
+        "code": {
+          "@title": "{i18n>CurrencyCode}",
+          "@Common.Text": {
+            "=": "name"
+          },
+          "key": true,
+          "type": "cds.String",
+          "length": 3
+        },
+        "symbol": {
+          "@title": "{i18n>CurrencySymbol}",
+          "type": "cds.String",
+          "length": 5
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "sap.common.Currencies.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "sap.common.Currencies.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "sap.common.CodeList": {
+      "kind": "aspect",
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "@UI.Identification": [
+        {
+          "Value": {
+            "=": "name"
+          }
+        }
+      ],
+      "@cds.odata.valuelist": true,
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "descr": {
+          "@title": "{i18n>Description}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 1000
+        }
+      }
+    },
+    "cuid": {
+      "kind": "aspect",
+      "elements": {
+        "ID": {
+          "@Core.Computed": true,
+          "@odata.Type": "Edm.String",
+          "key": true,
+          "type": "cds.UUID"
+        }
+      }
+    },
+    "managed": {
+      "kind": "aspect",
+      "elements": {
+        "createdAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedAt}",
+          "@readonly": true,
+          "@odata.on.insert": {
+            "#": "now"
+          },
+          "type": "cds.Timestamp"
+        },
+        "createdBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedBy}",
+          "@readonly": true,
+          "@odata.on.insert": {
+            "#": "user"
+          },
+          "@description": "{i18n>UserID.Description}",
+          "type": "User",
+          "length": 255
+        },
+        "modifiedAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@cds.on.update": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedAt}",
+          "@readonly": true,
+          "@odata.on.update": {
+            "#": "now"
+          },
+          "type": "cds.Timestamp"
+        },
+        "modifiedBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@cds.on.update": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedBy}",
+          "@readonly": true,
+          "@odata.on.update": {
+            "#": "user"
+          },
+          "@description": "{i18n>UserID.Description}",
+          "type": "User",
+          "length": 255
+        }
+      }
+    },
+    "temporal": {
+      "kind": "aspect",
+      "elements": {
+        "validFrom": {
+          "@cds.valid.from": true,
+          "type": "cds.Timestamp"
+        },
+        "validTo": {
+          "@cds.valid.to": true,
+          "type": "cds.Timestamp"
+        }
+      }
+    },
+    "User": {
+      "kind": "type",
+      "@title": "{i18n>UserID}",
+      "@description": "{i18n>UserID.Description}",
+      "type": "cds.String",
+      "length": 255
+    },
+    "ProjectType": {
+      "kind": "type",
+      "type": "cds.Association",
+      "target": "sap.sdcpmtool.master.ProjectTypes",
+      "keys": [
+        {
+          "ref": [
+            "code"
+          ]
+        }
+      ]
+    },
+    "ProjectMode": {
+      "kind": "type",
+      "type": "cds.Association",
+      "target": "sap.sdcpmtool.master.ProjectModes",
+      "keys": [
+        {
+          "ref": [
+            "code"
+          ]
+        }
+      ]
+    },
+    "ProjectStatus": {
+      "kind": "type",
+      "type": "cds.Association",
+      "target": "sap.sdcpmtool.master.ProjectStatuss",
+      "keys": [
+        {
+          "ref": [
+            "code"
+          ]
+        }
+      ]
+    },
+    "Region": {
+      "kind": "type",
+      "type": "cds.Association",
+      "target": "sap.sdcpmtool.master.Regions",
+      "keys": [
+        {
+          "ref": [
+            "code"
+          ]
+        }
+      ]
+    },
+    "SubRegion": {
+      "kind": "type",
+      "type": "cds.Association",
+      "target": "sap.sdcpmtool.master.SubRegions",
+      "keys": [
+        {
+          "ref": [
+            "code"
+          ]
+        }
+      ]
+    },
+    "DeliveryCenter": {
+      "kind": "type",
+      "type": "cds.Association",
+      "target": "sap.sdcpmtool.master.DeliveryCenters",
+      "keys": [
+        {
+          "ref": [
+            "code"
+          ]
+        }
+      ]
+    },
+    "ProjectSize": {
+      "kind": "type",
+      "type": "cds.Association",
+      "target": "sap.sdcpmtool.master.ProjectSizes",
+      "keys": [
+        {
+          "ref": [
+            "code"
+          ]
+        }
+      ]
+    },
+    "CustomerIndustry": {
+      "kind": "type",
+      "type": "cds.Association",
+      "target": "sap.sdcpmtool.master.CustomerIndustries",
+      "keys": [
+        {
+          "ref": [
+            "code"
+          ]
+        }
+      ]
+    },
+    "CompanyCode": {
+      "kind": "type",
+      "type": "cds.Association",
+      "target": "sap.sdcpmtool.master.CompanyCodes",
+      "keys": [
+        {
+          "ref": [
+            "code"
+          ]
+        }
+      ]
+    },
+    "BCPStatusField": {
+      "kind": "type",
+      "type": "cds.Association",
+      "target": "sap.sdcpmtool.master.BCPStatusFields",
+      "keys": [
+        {
+          "ref": [
+            "code"
+          ]
+        }
+      ]
+    },
+    "FactoryRelevantField": {
+      "kind": "type",
+      "type": "cds.Association",
+      "target": "sap.sdcpmtool.master.FactoryRelevantFields",
+      "keys": [
+        {
+          "ref": [
+            "code"
+          ]
+        }
+      ]
+    },
+    "ProjectPhaseField": {
+      "kind": "type",
+      "type": "cds.Association",
+      "target": "sap.sdcpmtool.master.ProjectPhaseFields",
+      "keys": [
+        {
+          "ref": [
+            "code"
+          ]
+        }
+      ]
+    },
+    "PMToolUser": {
+      "kind": "type",
+      "type": "cds.Association",
+      "target": "sap.sdcpmtool.master.Users",
+      "keys": [
+        {
+          "ref": [
+            "id"
+          ]
+        }
+      ]
+    },
+    "sap.sdcpmtool.master": {
+      "kind": "context"
+    },
+    "sap.sdcpmtool.master.Users": {
+      "kind": "entity",
+      "includes": [
+        "managed"
+      ],
+      "elements": {
+        "createdAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedAt}",
+          "@readonly": true,
+          "@odata.on.insert": {
+            "#": "now"
+          },
+          "type": "cds.Timestamp"
+        },
+        "createdBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedBy}",
+          "@readonly": true,
+          "@odata.on.insert": {
+            "#": "user"
+          },
+          "@description": "{i18n>UserID.Description}",
+          "type": "User",
+          "length": 255
+        },
+        "modifiedAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@cds.on.update": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedAt}",
+          "@readonly": true,
+          "@odata.on.update": {
+            "#": "now"
+          },
+          "type": "cds.Timestamp"
+        },
+        "modifiedBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@cds.on.update": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedBy}",
+          "@readonly": true,
+          "@odata.on.update": {
+            "#": "user"
+          },
+          "@description": "{i18n>UserID.Description}",
+          "type": "User",
+          "length": 255
+        },
+        "id": {
+          "@Core.Computed": true,
+          "@odata.Type": "Edm.String",
+          "key": true,
+          "type": "cds.UUID"
+        },
+        "seqId": {
+          "@readonly": true,
+          "type": "cds.Integer",
+          "default": {
+            "val": 0
+          }
+        },
+        "userId": {
+          "@Common.ValueList.CollectionPath": "Users",
+          "@Common.ValueList.Label": "",
+          "@Common.ValueList.Parameters": [
+            {
+              "$Type": "Common.ValueListParameterInOut",
+              "LocalDataProperty": {
+                "=": "userId"
+              },
+              "ValueListProperty": "userId"
+            },
+            {
+              "$Type": "Common.ValueListParameterDisplayOnly",
+              "ValueListProperty": "userName"
+            }
+          ],
+          "@Common.ValueList.SearchSupported": true,
+          "@title": "{i18n>UserID}",
+          "@description": "{i18n>UserID.Description}",
+          "type": "User",
+          "length": 255
+        },
+        "userINo": {
+          "@Common.ValueList.CollectionPath": "Users",
+          "@Common.ValueList.Label": "",
+          "@Common.ValueList.Parameters": [
+            {
+              "$Type": "Common.ValueListParameterInOut",
+              "LocalDataProperty": {
+                "=": "userINo"
+              },
+              "ValueListProperty": "userINo"
+            },
+            {
+              "$Type": "Common.ValueListParameterDisplayOnly",
+              "ValueListProperty": "userName"
+            }
+          ],
+          "@Common.ValueList.SearchSupported": true,
+          "type": "cds.String",
+          "length": 10
+        },
+        "userName": {
+          "@Common.ValueList.CollectionPath": "Users",
+          "@Common.ValueList.Label": "",
+          "@Common.ValueList.Parameters": [
+            {
+              "$Type": "Common.ValueListParameterInOut",
+              "LocalDataProperty": {
+                "=": "userName"
+              },
+              "ValueListProperty": "userName"
+            },
+            {
+              "$Type": "Common.ValueListParameterDisplayOnly",
+              "ValueListProperty": "userINo"
+            }
+          ],
+          "@Common.ValueList.SearchSupported": true,
+          "type": "cds.String",
+          "length": 50
+        }
+      }
+    },
+    "sap.sdcpmtool.master.ProjectTypes": {
+      "kind": "entity",
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "includes": [
+        "sap.sdcpmtool.master.CodeList"
+      ],
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "sap.sdcpmtool.master.ProjectTypes.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "sap.sdcpmtool.master.ProjectTypes.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "sap.sdcpmtool.master.ProjectModes": {
+      "kind": "entity",
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "includes": [
+        "sap.sdcpmtool.master.CodeList"
+      ],
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "sap.sdcpmtool.master.ProjectModes.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "sap.sdcpmtool.master.ProjectModes.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "sap.sdcpmtool.master.ProjectStatuss": {
+      "kind": "entity",
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "includes": [
+        "sap.sdcpmtool.master.CodeList"
+      ],
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "sap.sdcpmtool.master.ProjectStatuss.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "sap.sdcpmtool.master.ProjectStatuss.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "sap.sdcpmtool.master.Regions": {
+      "kind": "entity",
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "includes": [
+        "sap.sdcpmtool.master.CodeList"
+      ],
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "sap.sdcpmtool.master.Regions.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "sap.sdcpmtool.master.Regions.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "sap.sdcpmtool.master.SubRegions": {
+      "kind": "entity",
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "includes": [
+        "sap.sdcpmtool.master.CodeList"
+      ],
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        },
+        "region": {
+          "type": "Region",
+          "target": "sap.sdcpmtool.master.Regions",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "sap.sdcpmtool.master.SubRegions.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "sap.sdcpmtool.master.SubRegions.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "sap.sdcpmtool.master.DeliveryCenters": {
+      "kind": "entity",
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "includes": [
+        "sap.sdcpmtool.master.CodeList"
+      ],
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "sap.sdcpmtool.master.DeliveryCenters.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "sap.sdcpmtool.master.DeliveryCenters.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "sap.sdcpmtool.master.ProjectSizes": {
+      "kind": "entity",
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "includes": [
+        "sap.sdcpmtool.master.CodeList"
+      ],
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "sap.sdcpmtool.master.ProjectSizes.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "sap.sdcpmtool.master.ProjectSizes.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "sap.sdcpmtool.master.CustomerIndustries": {
+      "kind": "entity",
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "includes": [
+        "sap.sdcpmtool.master.CodeList"
+      ],
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "sap.sdcpmtool.master.CustomerIndustries.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "sap.sdcpmtool.master.CustomerIndustries.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "sap.sdcpmtool.master.CompanyCodes": {
+      "kind": "entity",
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "includes": [
+        "sap.sdcpmtool.master.CodeList"
+      ],
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "key": true,
+          "type": "cds.String",
+          "length": 4
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "sap.sdcpmtool.master.CompanyCodes.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "sap.sdcpmtool.master.CompanyCodes.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "sap.sdcpmtool.master.BCPStatusFields": {
+      "kind": "entity",
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "includes": [
+        "sap.sdcpmtool.master.CodeList"
+      ],
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "sap.sdcpmtool.master.BCPStatusFields.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "sap.sdcpmtool.master.BCPStatusFields.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "sap.sdcpmtool.master.FactoryRelevantFields": {
+      "kind": "entity",
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "includes": [
+        "sap.sdcpmtool.master.CodeList"
+      ],
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "sap.sdcpmtool.master.FactoryRelevantFields.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "sap.sdcpmtool.master.FactoryRelevantFields.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "sap.sdcpmtool.master.ProjectPhaseFields": {
+      "kind": "entity",
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "includes": [
+        "sap.sdcpmtool.master.CodeList"
+      ],
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "sap.sdcpmtool.master.ProjectPhaseFields.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "sap.sdcpmtool.master.ProjectPhaseFields.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "sap.sdcpmtool.master.CodeList": {
+      "kind": "aspect",
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        }
+      }
+    },
+    "sap.common.Languages.texts": {
+      "kind": "entity",
+      "@odata.draft.enabled": false,
+      "elements": {
+        "locale": {
+          "key": true,
+          "type": "cds.String",
+          "length": 14
+        },
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": false,
+          "type": "cds.String",
+          "length": 255
+        },
+        "descr": {
+          "@title": "{i18n>Description}",
+          "localized": false,
+          "type": "cds.String",
+          "length": 1000
+        },
+        "code": {
+          "@odata.containment.ignore": true,
+          "@title": "{i18n>LanguageCode}",
+          "@Common.Text": {
+            "=": "name"
+          },
+          "key": true,
+          "type": "cds.String",
+          "length": 14
+        }
+      }
+    },
+    "sap.common.Countries.texts": {
+      "kind": "entity",
+      "@odata.draft.enabled": false,
+      "elements": {
+        "locale": {
+          "key": true,
+          "type": "cds.String",
+          "length": 14
+        },
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": false,
+          "type": "cds.String",
+          "length": 255
+        },
+        "descr": {
+          "@title": "{i18n>Description}",
+          "localized": false,
+          "type": "cds.String",
+          "length": 1000
+        },
+        "code": {
+          "@odata.containment.ignore": true,
+          "@title": "{i18n>CountryCode}",
+          "@Common.Text": {
+            "=": "name"
+          },
+          "key": true,
+          "type": "cds.String",
+          "length": 3
+        }
+      }
+    },
+    "sap.common.Currencies.texts": {
+      "kind": "entity",
+      "@odata.draft.enabled": false,
+      "elements": {
+        "locale": {
+          "key": true,
+          "type": "cds.String",
+          "length": 14
+        },
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": false,
+          "type": "cds.String",
+          "length": 255
+        },
+        "descr": {
+          "@title": "{i18n>Description}",
+          "localized": false,
+          "type": "cds.String",
+          "length": 1000
+        },
+        "code": {
+          "@odata.containment.ignore": true,
+          "@title": "{i18n>CurrencyCode}",
+          "@Common.Text": {
+            "=": "name"
+          },
+          "key": true,
+          "type": "cds.String",
+          "length": 3
+        }
+      }
+    },
+    "sap.sdcpmtool.master.ProjectTypes.texts": {
+      "kind": "entity",
+      "@odata.draft.enabled": false,
+      "elements": {
+        "locale": {
+          "key": true,
+          "type": "cds.String",
+          "length": 14
+        },
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": false,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "@odata.containment.ignore": true,
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        }
+      }
+    },
+    "sap.sdcpmtool.master.ProjectModes.texts": {
+      "kind": "entity",
+      "@odata.draft.enabled": false,
+      "elements": {
+        "locale": {
+          "key": true,
+          "type": "cds.String",
+          "length": 14
+        },
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": false,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "@odata.containment.ignore": true,
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        }
+      }
+    },
+    "sap.sdcpmtool.master.ProjectStatuss.texts": {
+      "kind": "entity",
+      "@odata.draft.enabled": false,
+      "elements": {
+        "locale": {
+          "key": true,
+          "type": "cds.String",
+          "length": 14
+        },
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": false,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "@odata.containment.ignore": true,
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        }
+      }
+    },
+    "sap.sdcpmtool.master.Regions.texts": {
+      "kind": "entity",
+      "@odata.draft.enabled": false,
+      "elements": {
+        "locale": {
+          "key": true,
+          "type": "cds.String",
+          "length": 14
+        },
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": false,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "@odata.containment.ignore": true,
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        }
+      }
+    },
+    "sap.sdcpmtool.master.SubRegions.texts": {
+      "kind": "entity",
+      "@odata.draft.enabled": false,
+      "elements": {
+        "locale": {
+          "key": true,
+          "type": "cds.String",
+          "length": 14
+        },
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": false,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "@odata.containment.ignore": true,
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        }
+      }
+    },
+    "sap.sdcpmtool.master.DeliveryCenters.texts": {
+      "kind": "entity",
+      "@odata.draft.enabled": false,
+      "elements": {
+        "locale": {
+          "key": true,
+          "type": "cds.String",
+          "length": 14
+        },
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": false,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "@odata.containment.ignore": true,
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        }
+      }
+    },
+    "sap.sdcpmtool.master.ProjectSizes.texts": {
+      "kind": "entity",
+      "@odata.draft.enabled": false,
+      "elements": {
+        "locale": {
+          "key": true,
+          "type": "cds.String",
+          "length": 14
+        },
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": false,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "@odata.containment.ignore": true,
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        }
+      }
+    },
+    "sap.sdcpmtool.master.CustomerIndustries.texts": {
+      "kind": "entity",
+      "@odata.draft.enabled": false,
+      "elements": {
+        "locale": {
+          "key": true,
+          "type": "cds.String",
+          "length": 14
+        },
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": false,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "@odata.containment.ignore": true,
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        }
+      }
+    },
+    "sap.sdcpmtool.master.CompanyCodes.texts": {
+      "kind": "entity",
+      "@odata.draft.enabled": false,
+      "elements": {
+        "locale": {
+          "key": true,
+          "type": "cds.String",
+          "length": 14
+        },
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": false,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "@odata.containment.ignore": true,
+          "key": true,
+          "type": "cds.String",
+          "length": 4
+        }
+      }
+    },
+    "sap.sdcpmtool.master.BCPStatusFields.texts": {
+      "kind": "entity",
+      "@odata.draft.enabled": false,
+      "elements": {
+        "locale": {
+          "key": true,
+          "type": "cds.String",
+          "length": 14
+        },
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": false,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "@odata.containment.ignore": true,
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        }
+      }
+    },
+    "sap.sdcpmtool.master.FactoryRelevantFields.texts": {
+      "kind": "entity",
+      "@odata.draft.enabled": false,
+      "elements": {
+        "locale": {
+          "key": true,
+          "type": "cds.String",
+          "length": 14
+        },
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": false,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "@odata.containment.ignore": true,
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        }
+      }
+    },
+    "sap.sdcpmtool.master.ProjectPhaseFields.texts": {
+      "kind": "entity",
+      "@odata.draft.enabled": false,
+      "elements": {
+        "locale": {
+          "key": true,
+          "type": "cds.String",
+          "length": 14
+        },
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": false,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "@odata.containment.ignore": true,
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        }
+      }
+    },
+    "ProjectService.ProjectTypes": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.sdcpmtool.master.ProjectTypes"
+          ]
+        }
+      },
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "ProjectService.ProjectTypes.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "ProjectService.ProjectTypes.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "ProjectService.ProjectModes": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.sdcpmtool.master.ProjectModes"
+          ]
+        }
+      },
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "ProjectService.ProjectModes.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "ProjectService.ProjectModes.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "ProjectService.ProjectStatuss": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.sdcpmtool.master.ProjectStatuss"
+          ]
+        }
+      },
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "ProjectService.ProjectStatuss.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "ProjectService.ProjectStatuss.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "ProjectService.Regions": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.sdcpmtool.master.Regions"
+          ]
+        }
+      },
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "ProjectService.Regions.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "ProjectService.Regions.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "ProjectService.SubRegions": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.sdcpmtool.master.SubRegions"
+          ]
+        }
+      },
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        },
+        "region": {
+          "type": "Region",
+          "target": "ProjectService.Regions",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "ProjectService.SubRegions.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "ProjectService.SubRegions.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "ProjectService.Countries": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "@UI.Identification": [
+        {
+          "Value": {
+            "=": "name"
+          }
+        }
+      ],
+      "@cds.odata.valuelist": true,
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.common.Countries"
+          ]
+        }
+      },
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "descr": {
+          "@title": "{i18n>Description}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 1000
+        },
+        "code": {
+          "@title": "{i18n>CountryCode}",
+          "@Common.Text": {
+            "=": "name"
+          },
+          "key": true,
+          "type": "cds.String",
+          "length": 3
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "ProjectService.Countries.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "ProjectService.Countries.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "ProjectService.DeliveryCenters": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.sdcpmtool.master.DeliveryCenters"
+          ]
+        }
+      },
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "ProjectService.DeliveryCenters.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "ProjectService.DeliveryCenters.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "ProjectService.BCPStatusFields": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.sdcpmtool.master.BCPStatusFields"
+          ]
+        }
+      },
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "ProjectService.BCPStatusFields.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "ProjectService.BCPStatusFields.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "ProjectService.FactoryRelevantFields": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.sdcpmtool.master.FactoryRelevantFields"
+          ]
+        }
+      },
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "ProjectService.FactoryRelevantFields.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "ProjectService.FactoryRelevantFields.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "ProjectService.ProjectSizes": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.sdcpmtool.master.ProjectSizes"
+          ]
+        }
+      },
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "ProjectService.ProjectSizes.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "ProjectService.ProjectSizes.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "ProjectService.CustomerIndustries": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.sdcpmtool.master.CustomerIndustries"
+          ]
+        }
+      },
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "ProjectService.CustomerIndustries.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "ProjectService.CustomerIndustries.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "ProjectService.ProjectPhaseFields": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.sdcpmtool.master.ProjectPhaseFields"
+          ]
+        }
+      },
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "ProjectService.ProjectPhaseFields.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "ProjectService.ProjectPhaseFields.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "ProjectService.CompanyCodes": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.sdcpmtool.master.CompanyCodes"
+          ]
+        }
+      },
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "key": true,
+          "type": "cds.String",
+          "length": 4
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "ProjectService.CompanyCodes.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "ProjectService.CompanyCodes.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "ProjectService.Currencies": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "@UI.Identification": [
+        {
+          "Value": {
+            "=": "name"
+          }
+        }
+      ],
+      "@cds.odata.valuelist": true,
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.common.Currencies"
+          ]
+        }
+      },
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "descr": {
+          "@title": "{i18n>Description}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 1000
+        },
+        "code": {
+          "@title": "{i18n>CurrencyCode}",
+          "@Common.Text": {
+            "=": "name"
+          },
+          "key": true,
+          "type": "cds.String",
+          "length": 3
+        },
+        "symbol": {
+          "@title": "{i18n>CurrencySymbol}",
+          "type": "cds.String",
+          "length": 5
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "ProjectService.Currencies.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "ProjectService.Currencies.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "ManagerService.ProjectTypes": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.sdcpmtool.master.ProjectTypes"
+          ]
+        }
+      },
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "ManagerService.ProjectTypes.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "ManagerService.ProjectTypes.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "ManagerService.ProjectModes": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.sdcpmtool.master.ProjectModes"
+          ]
+        }
+      },
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "ManagerService.ProjectModes.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "ManagerService.ProjectModes.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "ManagerService.ProjectStatuss": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.sdcpmtool.master.ProjectStatuss"
+          ]
+        }
+      },
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "ManagerService.ProjectStatuss.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "ManagerService.ProjectStatuss.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "ManagerService.Regions": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.sdcpmtool.master.Regions"
+          ]
+        }
+      },
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "ManagerService.Regions.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "ManagerService.Regions.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "ManagerService.SubRegions": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.sdcpmtool.master.SubRegions"
+          ]
+        }
+      },
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        },
+        "region": {
+          "type": "Region",
+          "target": "ManagerService.Regions",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "ManagerService.SubRegions.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "ManagerService.SubRegions.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "ManagerService.Countries": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "@UI.Identification": [
+        {
+          "Value": {
+            "=": "name"
+          }
+        }
+      ],
+      "@cds.odata.valuelist": true,
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.common.Countries"
+          ]
+        }
+      },
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "descr": {
+          "@title": "{i18n>Description}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 1000
+        },
+        "code": {
+          "@title": "{i18n>CountryCode}",
+          "@Common.Text": {
+            "=": "name"
+          },
+          "key": true,
+          "type": "cds.String",
+          "length": 3
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "ManagerService.Countries.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "ManagerService.Countries.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "ManagerService.DeliveryCenters": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.sdcpmtool.master.DeliveryCenters"
+          ]
+        }
+      },
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "ManagerService.DeliveryCenters.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "ManagerService.DeliveryCenters.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "ManagerService.BCPStatusFields": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.sdcpmtool.master.BCPStatusFields"
+          ]
+        }
+      },
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "ManagerService.BCPStatusFields.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "ManagerService.BCPStatusFields.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "ManagerService.FactoryRelevantFields": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.sdcpmtool.master.FactoryRelevantFields"
+          ]
+        }
+      },
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "ManagerService.FactoryRelevantFields.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "ManagerService.FactoryRelevantFields.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "ManagerService.ProjectSizes": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.sdcpmtool.master.ProjectSizes"
+          ]
+        }
+      },
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "ManagerService.ProjectSizes.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "ManagerService.ProjectSizes.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "ManagerService.CustomerIndustries": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.sdcpmtool.master.CustomerIndustries"
+          ]
+        }
+      },
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "ManagerService.CustomerIndustries.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "ManagerService.CustomerIndustries.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "ManagerService.ProjectPhaseFields": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.sdcpmtool.master.ProjectPhaseFields"
+          ]
+        }
+      },
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "ManagerService.ProjectPhaseFields.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "ManagerService.ProjectPhaseFields.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "ManagerService.CompanyCodes": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.sdcpmtool.master.CompanyCodes"
+          ]
+        }
+      },
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "key": true,
+          "type": "cds.String",
+          "length": 4
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "ManagerService.CompanyCodes.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "ManagerService.CompanyCodes.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "ManagerService.Currencies": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "@UI.Identification": [
+        {
+          "Value": {
+            "=": "name"
+          }
+        }
+      ],
+      "@cds.odata.valuelist": true,
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.common.Currencies"
+          ]
+        }
+      },
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "descr": {
+          "@title": "{i18n>Description}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 1000
+        },
+        "code": {
+          "@title": "{i18n>CurrencyCode}",
+          "@Common.Text": {
+            "=": "name"
+          },
+          "key": true,
+          "type": "cds.String",
+          "length": 3
+        },
+        "symbol": {
+          "@title": "{i18n>CurrencySymbol}",
+          "type": "cds.String",
+          "length": 5
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "ManagerService.Currencies.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "ManagerService.Currencies.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "ProjectService.ProjectTypes.texts": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@odata.draft.enabled": false,
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.sdcpmtool.master.ProjectTypes.texts"
+          ]
+        }
+      },
+      "elements": {
+        "locale": {
+          "key": true,
+          "type": "cds.String",
+          "length": 14
+        },
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": false,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "@odata.containment.ignore": true,
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        }
+      }
+    },
+    "ProjectService.ProjectModes.texts": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@odata.draft.enabled": false,
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.sdcpmtool.master.ProjectModes.texts"
+          ]
+        }
+      },
+      "elements": {
+        "locale": {
+          "key": true,
+          "type": "cds.String",
+          "length": 14
+        },
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": false,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "@odata.containment.ignore": true,
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        }
+      }
+    },
+    "ProjectService.ProjectStatuss.texts": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@odata.draft.enabled": false,
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.sdcpmtool.master.ProjectStatuss.texts"
+          ]
+        }
+      },
+      "elements": {
+        "locale": {
+          "key": true,
+          "type": "cds.String",
+          "length": 14
+        },
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": false,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "@odata.containment.ignore": true,
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        }
+      }
+    },
+    "ProjectService.Regions.texts": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@odata.draft.enabled": false,
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.sdcpmtool.master.Regions.texts"
+          ]
+        }
+      },
+      "elements": {
+        "locale": {
+          "key": true,
+          "type": "cds.String",
+          "length": 14
+        },
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": false,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "@odata.containment.ignore": true,
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        }
+      }
+    },
+    "ProjectService.SubRegions.texts": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@odata.draft.enabled": false,
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.sdcpmtool.master.SubRegions.texts"
+          ]
+        }
+      },
+      "elements": {
+        "locale": {
+          "key": true,
+          "type": "cds.String",
+          "length": 14
+        },
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": false,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "@odata.containment.ignore": true,
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        }
+      }
+    },
+    "ProjectService.Countries.texts": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@odata.draft.enabled": false,
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.common.Countries.texts"
+          ]
+        }
+      },
+      "elements": {
+        "locale": {
+          "key": true,
+          "type": "cds.String",
+          "length": 14
+        },
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": false,
+          "type": "cds.String",
+          "length": 255
+        },
+        "descr": {
+          "@title": "{i18n>Description}",
+          "localized": false,
+          "type": "cds.String",
+          "length": 1000
+        },
+        "code": {
+          "@odata.containment.ignore": true,
+          "@title": "{i18n>CountryCode}",
+          "@Common.Text": {
+            "=": "name"
+          },
+          "key": true,
+          "type": "cds.String",
+          "length": 3
+        }
+      }
+    },
+    "ProjectService.DeliveryCenters.texts": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@odata.draft.enabled": false,
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.sdcpmtool.master.DeliveryCenters.texts"
+          ]
+        }
+      },
+      "elements": {
+        "locale": {
+          "key": true,
+          "type": "cds.String",
+          "length": 14
+        },
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": false,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "@odata.containment.ignore": true,
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        }
+      }
+    },
+    "ProjectService.BCPStatusFields.texts": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@odata.draft.enabled": false,
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.sdcpmtool.master.BCPStatusFields.texts"
+          ]
+        }
+      },
+      "elements": {
+        "locale": {
+          "key": true,
+          "type": "cds.String",
+          "length": 14
+        },
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": false,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "@odata.containment.ignore": true,
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        }
+      }
+    },
+    "ProjectService.FactoryRelevantFields.texts": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@odata.draft.enabled": false,
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.sdcpmtool.master.FactoryRelevantFields.texts"
+          ]
+        }
+      },
+      "elements": {
+        "locale": {
+          "key": true,
+          "type": "cds.String",
+          "length": 14
+        },
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": false,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "@odata.containment.ignore": true,
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        }
+      }
+    },
+    "ProjectService.ProjectSizes.texts": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@odata.draft.enabled": false,
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.sdcpmtool.master.ProjectSizes.texts"
+          ]
+        }
+      },
+      "elements": {
+        "locale": {
+          "key": true,
+          "type": "cds.String",
+          "length": 14
+        },
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": false,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "@odata.containment.ignore": true,
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        }
+      }
+    },
+    "ProjectService.CustomerIndustries.texts": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@odata.draft.enabled": false,
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.sdcpmtool.master.CustomerIndustries.texts"
+          ]
+        }
+      },
+      "elements": {
+        "locale": {
+          "key": true,
+          "type": "cds.String",
+          "length": 14
+        },
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": false,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "@odata.containment.ignore": true,
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        }
+      }
+    },
+    "ProjectService.ProjectPhaseFields.texts": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@odata.draft.enabled": false,
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.sdcpmtool.master.ProjectPhaseFields.texts"
+          ]
+        }
+      },
+      "elements": {
+        "locale": {
+          "key": true,
+          "type": "cds.String",
+          "length": 14
+        },
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": false,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "@odata.containment.ignore": true,
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        }
+      }
+    },
+    "ProjectService.CompanyCodes.texts": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@odata.draft.enabled": false,
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.sdcpmtool.master.CompanyCodes.texts"
+          ]
+        }
+      },
+      "elements": {
+        "locale": {
+          "key": true,
+          "type": "cds.String",
+          "length": 14
+        },
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": false,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "@odata.containment.ignore": true,
+          "key": true,
+          "type": "cds.String",
+          "length": 4
+        }
+      }
+    },
+    "ProjectService.Currencies.texts": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@odata.draft.enabled": false,
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.common.Currencies.texts"
+          ]
+        }
+      },
+      "elements": {
+        "locale": {
+          "key": true,
+          "type": "cds.String",
+          "length": 14
+        },
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": false,
+          "type": "cds.String",
+          "length": 255
+        },
+        "descr": {
+          "@title": "{i18n>Description}",
+          "localized": false,
+          "type": "cds.String",
+          "length": 1000
+        },
+        "code": {
+          "@odata.containment.ignore": true,
+          "@title": "{i18n>CurrencyCode}",
+          "@Common.Text": {
+            "=": "name"
+          },
+          "key": true,
+          "type": "cds.String",
+          "length": 3
+        }
+      }
+    },
+    "ManagerService.ProjectTypes.texts": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@odata.draft.enabled": false,
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.sdcpmtool.master.ProjectTypes.texts"
+          ]
+        }
+      },
+      "elements": {
+        "locale": {
+          "key": true,
+          "type": "cds.String",
+          "length": 14
+        },
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": false,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "@odata.containment.ignore": true,
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        }
+      }
+    },
+    "ManagerService.ProjectModes.texts": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@odata.draft.enabled": false,
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.sdcpmtool.master.ProjectModes.texts"
+          ]
+        }
+      },
+      "elements": {
+        "locale": {
+          "key": true,
+          "type": "cds.String",
+          "length": 14
+        },
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": false,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "@odata.containment.ignore": true,
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        }
+      }
+    },
+    "ManagerService.ProjectStatuss.texts": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@odata.draft.enabled": false,
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.sdcpmtool.master.ProjectStatuss.texts"
+          ]
+        }
+      },
+      "elements": {
+        "locale": {
+          "key": true,
+          "type": "cds.String",
+          "length": 14
+        },
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": false,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "@odata.containment.ignore": true,
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        }
+      }
+    },
+    "ManagerService.Regions.texts": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@odata.draft.enabled": false,
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.sdcpmtool.master.Regions.texts"
+          ]
+        }
+      },
+      "elements": {
+        "locale": {
+          "key": true,
+          "type": "cds.String",
+          "length": 14
+        },
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": false,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "@odata.containment.ignore": true,
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        }
+      }
+    },
+    "ManagerService.SubRegions.texts": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@odata.draft.enabled": false,
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.sdcpmtool.master.SubRegions.texts"
+          ]
+        }
+      },
+      "elements": {
+        "locale": {
+          "key": true,
+          "type": "cds.String",
+          "length": 14
+        },
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": false,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "@odata.containment.ignore": true,
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        }
+      }
+    },
+    "ManagerService.Countries.texts": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@odata.draft.enabled": false,
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.common.Countries.texts"
+          ]
+        }
+      },
+      "elements": {
+        "locale": {
+          "key": true,
+          "type": "cds.String",
+          "length": 14
+        },
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": false,
+          "type": "cds.String",
+          "length": 255
+        },
+        "descr": {
+          "@title": "{i18n>Description}",
+          "localized": false,
+          "type": "cds.String",
+          "length": 1000
+        },
+        "code": {
+          "@odata.containment.ignore": true,
+          "@title": "{i18n>CountryCode}",
+          "@Common.Text": {
+            "=": "name"
+          },
+          "key": true,
+          "type": "cds.String",
+          "length": 3
+        }
+      }
+    },
+    "ManagerService.DeliveryCenters.texts": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@odata.draft.enabled": false,
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.sdcpmtool.master.DeliveryCenters.texts"
+          ]
+        }
+      },
+      "elements": {
+        "locale": {
+          "key": true,
+          "type": "cds.String",
+          "length": 14
+        },
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": false,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "@odata.containment.ignore": true,
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        }
+      }
+    },
+    "ManagerService.BCPStatusFields.texts": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@odata.draft.enabled": false,
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.sdcpmtool.master.BCPStatusFields.texts"
+          ]
+        }
+      },
+      "elements": {
+        "locale": {
+          "key": true,
+          "type": "cds.String",
+          "length": 14
+        },
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": false,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "@odata.containment.ignore": true,
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        }
+      }
+    },
+    "ManagerService.FactoryRelevantFields.texts": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@odata.draft.enabled": false,
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.sdcpmtool.master.FactoryRelevantFields.texts"
+          ]
+        }
+      },
+      "elements": {
+        "locale": {
+          "key": true,
+          "type": "cds.String",
+          "length": 14
+        },
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": false,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "@odata.containment.ignore": true,
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        }
+      }
+    },
+    "ManagerService.ProjectSizes.texts": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@odata.draft.enabled": false,
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.sdcpmtool.master.ProjectSizes.texts"
+          ]
+        }
+      },
+      "elements": {
+        "locale": {
+          "key": true,
+          "type": "cds.String",
+          "length": 14
+        },
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": false,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "@odata.containment.ignore": true,
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        }
+      }
+    },
+    "ManagerService.CustomerIndustries.texts": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@odata.draft.enabled": false,
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.sdcpmtool.master.CustomerIndustries.texts"
+          ]
+        }
+      },
+      "elements": {
+        "locale": {
+          "key": true,
+          "type": "cds.String",
+          "length": 14
+        },
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": false,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "@odata.containment.ignore": true,
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        }
+      }
+    },
+    "ManagerService.ProjectPhaseFields.texts": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@odata.draft.enabled": false,
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.sdcpmtool.master.ProjectPhaseFields.texts"
+          ]
+        }
+      },
+      "elements": {
+        "locale": {
+          "key": true,
+          "type": "cds.String",
+          "length": 14
+        },
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": false,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "@odata.containment.ignore": true,
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        }
+      }
+    },
+    "ManagerService.CompanyCodes.texts": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@odata.draft.enabled": false,
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.sdcpmtool.master.CompanyCodes.texts"
+          ]
+        }
+      },
+      "elements": {
+        "locale": {
+          "key": true,
+          "type": "cds.String",
+          "length": 14
+        },
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": false,
+          "type": "cds.String",
+          "length": 255
+        },
+        "code": {
+          "@odata.containment.ignore": true,
+          "key": true,
+          "type": "cds.String",
+          "length": 4
+        }
+      }
+    },
+    "ManagerService.Currencies.texts": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@odata.draft.enabled": false,
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.common.Currencies.texts"
+          ]
+        }
+      },
+      "elements": {
+        "locale": {
+          "key": true,
+          "type": "cds.String",
+          "length": 14
+        },
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": false,
+          "type": "cds.String",
+          "length": 255
+        },
+        "descr": {
+          "@title": "{i18n>Description}",
+          "localized": false,
+          "type": "cds.String",
+          "length": 1000
+        },
+        "code": {
+          "@odata.containment.ignore": true,
+          "@title": "{i18n>CurrencyCode}",
+          "@Common.Text": {
+            "=": "name"
+          },
+          "key": true,
+          "type": "cds.String",
+          "length": 3
+        }
+      }
+    }
+  },
+  "extensions": [
+    {
+      "annotate": "cds.UUID",
+      "@Core.Computed": true,
+      "@odata.Type": "Edm.String"
+    },
+    {
+      "annotate": "sap.sdcpmtool.transaction.Projects",
+      "elements": {
+        "projectType_name": {
+          "@Common.FieldControl": {
+            "#": "Readonly"
+          }
+        }
+      }
+    }
+  ],
+  "meta": {
+    "creator": "CDS Compiler v2.5.2",
+    "flavor": "inferred"
+  },
+  "$version": "2.0"
+}

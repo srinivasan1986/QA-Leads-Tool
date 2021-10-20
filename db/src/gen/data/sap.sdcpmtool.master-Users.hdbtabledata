@@ -1,0 +1,33 @@
+{
+  "format_version": 1,
+  "imports": [
+    {
+      "target_table": "SAP_SDCPMTOOL_MASTER_USERS",
+      "source_data": {
+        "data_type": "CSV",
+        "file_name": "sap.sdcpmtool.master-Users.csv",
+        "has_header": true,
+        "type_config": {
+          "delimiter": ";"
+        }
+      },
+      "import_settings": {
+        "import_columns": [
+          "ID",
+          "SEQID",
+          "USERID",
+          "USERINO",
+          "USERNAME"
+        ],
+        "include_filter": []
+      },
+      "column_mappings": {
+        "ID": "id",
+        "SEQID": "seqId",
+        "USERID": "userId",
+        "USERINO": "userINo",
+        "USERNAME": "userName"
+      }
+    }
+  ]
+}

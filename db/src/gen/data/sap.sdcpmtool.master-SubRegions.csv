@@ -1,0 +1,37 @@
+code;region_code;name
+01;01;Australia/New Zealand
+02;01;India
+03;01;Japan
+04;01;Korea
+05;01;South East Asia
+07;02;Belux
+08;02;EM North PE
+09;02;EMEA North RF
+10;02;France
+11;02;Netherlands
+12;02;Nordics
+13;02;UKI
+14;03;Africa
+15;03;EMEA South RF
+16;03;Italy & Greece
+17;03;ME North
+19;03;ME South
+21;03;SEFA
+22;04;China
+23;04;HK
+24;04;TW
+25;05;Brasil
+26;05;Mexico
+27;05;North
+28;05;South
+29;06;CEE
+30;06;CH
+31;06;CIS
+32;06;DE
+33;06;MEE RF
+34;07;Canada
+35;07;MidWest DBS
+36;07;NorthEast DBS
+37;07;Regulated DBS
+39;07;South DBS
+40;07;West DBS
